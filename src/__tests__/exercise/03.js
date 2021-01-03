@@ -7,9 +7,9 @@ import {render, screen} from '@testing-library/react'
 import Counter from '../../components/counter'
 
 test('counter increments and decrements when the buttons are clicked', () => {
-  const {container} = render(<Counter />)
+  render(<Counter />)
   const [decrement, increment] = screen.getAllByRole('button')
-  const message = container.firstChild.querySelector('div')
+  const message = screen.getByText(/current count/i)
 
   expect(message).toHaveTextContent('Current count: 0')
   userEvent.click(increment)
