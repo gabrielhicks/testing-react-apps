@@ -6,24 +6,31 @@ import ReactDOM from 'react-dom'
 import Counter from '../../components/counter'
 
 test('counter increments and decrements when the buttons are clicked', () => {
-  // 🐨 create a div to render your component to (💰 document.createElement)
-  //
-  // 🐨 append the div to document.body (💰 document.body.append)
-  //
-  // 🐨 use ReactDOM.render to render the <Counter /> to the div
-  // 🐨 get a reference to the increment and decrement buttons:
-  //   💰 div.querySelectorAll('button')
-  // 🐨 get a reference to the message div:
-  //   💰 div.firstChild.querySelector('div')
-  //
-  // 🐨 expect the message.textContent toBe 'Current count: 0'
-  // 🐨 click the increment button (💰 increment.click())
-  // 🐨 assert the message.textContent
-  // 🐨 click the decrement button (💰 decrement.click())
-  // 🐨 assert the message.textContent
-  //
-  // 🐨 cleanup by removing the div from the page (💰 div.remove())
-  // 🦉 If you don't cleanup, then it could impact other tests and/or cause a memory leak
+  const counter = document.createElement('div')
+  document.body.append(counter)
+
+  ReactDOM.render(<Counter />, counter)
+  const counterButtons = counter.querySelectorAll('button')
+  const decrement = counterButtons[0]
+  const increment = counterButtons[1]
+  const message = counter.firstChild.querySelector('div')
+
+  expect(message.textContent).toBe('Current count: 0')
+  const incrementClickEvent = new MouseEvent('click', {
+    bubbles: true,
+    cancelable: true,
+    button: 0,
+  })
+  increment.dispatchEvent(incrementClickEvent)
+  expect(message.textContent).toBe('Current count: 1')
+  const decrementClickEvent = new MouseEvent('click', {
+    bubbles: true,
+    cancelable: true,
+    button: 1,
+  })
+  decrement.dispatchEvent(decrementClickEvent)
+  expect(message.textContent).toBe('Current count: 0')
+  counter.remove()
 })
 
 /* eslint no-unused-vars:0 */
