@@ -39,12 +39,14 @@ test(`login attempts with missing values are not submitted`, async () => {
   render(<Login />)
   const {username, password} = buildLoginForm()
 
-  userEvent.type(screen.getByLabelText(/username/i), username)
-  // userEvent.type(screen.getByLabelText(/password/i), password)
+  // userEvent.type(screen.getByLabelText(/username/i), username)
+  userEvent.type(screen.getByLabelText(/password/i), password)
 
   userEvent.click(screen.getByRole('button', {name: /submit/i}))
 
   await waitForElementToBeRemoved(() => screen.getByLabelText(/loading/i))
 
-  expect(screen.getByText('password required')).toBeInTheDocument()
+  expect(screen.getByRole('alert').textContent).toMatchInlineSnapshot(
+    `"username required"`,
+  )
 })
