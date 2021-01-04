@@ -22,7 +22,9 @@ test('submitting the form calls onSubmit with username and password', () => {
   render(<Login onSubmit={handleSubmit} />)
 
   // destructuring a response from my mock login form
-  const {username, password} = buildLoginForm()
+  // allowing override with specific desired password
+  // this allows testing for specific validations in password
+  const {username, password} = buildLoginForm({passowrd: 'abc123'})
 
   userEvent.type(screen.getByLabelText(/username/i), username)
   userEvent.type(screen.getByLabelText(/password/i), password)
