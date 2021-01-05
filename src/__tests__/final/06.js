@@ -27,6 +27,7 @@ test('displays the users current location', async () => {
       longitude: 139,
     },
   }
+
   const {promise, resolve} = deferred()
   window.navigator.geolocation.getCurrentPosition.mockImplementation(
     callback => {
